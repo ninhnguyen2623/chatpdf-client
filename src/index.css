@@ -1,0 +1,38 @@
+@import "tailwindcss";
+.rpv-default-layout__container {
+    border: none !important; /* Loại bỏ viền của Viewer */
+    box-shadow: none !important; /* Loại bỏ bóng nếu có */
+  }
+
+.rpv-default-layout__toolbar  {
+    background-color: white !important;
+    display: none !important;
+}
+.rpv-default-layout__sidebar-headers {
+    background-color: white !important;
+    display: none !important;
+}
+.rpv-default-layout__body{
+    padding-top: 0px !important ;
+}
+@keyframes bounceDots {
+    0% { transform: translateY(0); opacity: 0.3; }
+    50% { transform: translateY(-2px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.3; }
+}
+
+.typing-animation::after {
+    content: " .";
+    animation: bounceDots 1.5s infinite;
+}
+
+.typing-animation::before {
+    content: ".";
+    animation: bounceDots 1.5s infinite 0.3s;
+}
+
+.typing-animation {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+}
