@@ -1,5 +1,5 @@
 # ChatPDF
-ChatPDF là một ứng dụng web cho phép người dùng tải lên PDF và trò chuyện với nội dung của họ bằng các mô hình AI như Song Tử và Deepseek. Được xây dựng với Reactjs, TypeScript và TailWindCSS, nó có giao diện người dùng thân thiện với người dùng với Google OAuth2 và tóm tắt. Phần phụ trợ Django với Redis và AI API đảm bảo tương tác tài liệu hiệu quả, an toàn cho sinh viên và chuyên gia
+ChatPDF là một ứng dụng web cho phép người dùng tải lên PDF và trò chuyện với nội dung của họ bằng các mô hình AI như Gemini và Deepseek. Được xây dựng với Reactjs, TypeScript và TailWindCSS, nó có giao diện người dùng thân thiện với người dùng với Google OAuth2 và tóm tắt. Phần phụ trợ Django với Redis và AI API đảm bảo tương tác tài liệu hiệu quả, an toàn cho sinh viên và chuyên gia
 
 ## Công nghệ được sử dụng:
 -Frontend: TypeScript, ReactJS, Redux Toolkit (Quản lý trạng thái), Axios (Yêu cầu API), TailWindcss, ANT Design, React-PDF-Viewer (kết xuất PDF), VITE (công cụ xây dựng). <br>
