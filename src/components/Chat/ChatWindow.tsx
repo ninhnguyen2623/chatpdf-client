@@ -21,7 +21,7 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css'
 import { Worker } from '@react-pdf-viewer/core'
 import AIResponse from '../AIResponse'
 import { toast } from 'react-toastify'
-import { FaFileWord, FaRegFileLines, FaRegFileWord, FaRegSquarePlus } from 'react-icons/fa6'
+import { FaBriefcase, FaFileWord, FaFlaskVial, FaQuoteLeft, FaRegFileLines, FaRegFileWord, FaRegSquarePlus } from 'react-icons/fa6'
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi'
 import ModeSelect from './ModeSelect'
 import { AiOutlineDelete, AiOutlineSlack } from 'react-icons/ai'
@@ -30,8 +30,19 @@ import { Button, Modal, Space, Tooltip } from 'antd';
 import { MdOutlineErrorOutline, MdOutlineSummarize } from "react-icons/md";
 import { FaFile } from "react-icons/fa6";
 import { IoArrowUpCircle } from "react-icons/io5";
-import { LuSendHorizontal } from "react-icons/lu";
-
+import { LuFileStack, LuSendHorizontal } from "react-icons/lu";
+import Nav from '../AchievementsSection'
+import AchievementsSection from '../AchievementsSection'
+import uni1 from "../../assets/uni1.png"
+import uni2 from "../../assets/uni2.png"
+import uni3 from "../../assets/uni3.png"
+import uni4 from "../../assets/uni4.png"
+import uni5 from "../../assets/uni5.png"
+import avata from "../../assets/avata.jpg"
+import { FaGraduationCap } from "react-icons/fa6";
+import { GrLanguage } from "react-icons/gr";
+import Footer from '../footer'
+import CollapseInfo from '../CollapseInfo'
 
 
 export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSidebar: () => void, sidebarOpen: boolean }) {
@@ -343,8 +354,10 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
                     </div>
                 </div>
             ) : (
-                <div className="h-full top-0 z-[-2] bg-amber-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
-                    <div className="h-[8%]">
+
+                <div className="z-[-2] ">
+
+                    <div className="h-[60px]">
                         {!sidebarOpen && (
                             <div className="flex ml-2 h-full items-center text-2xl text-neutral-700 font-bold space-x-4">
                                 <button onClick={toggleSidebar}>
@@ -353,19 +366,19 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
                             </div>
                         )}
                     </div>
-                    <div className="h-[92%] w-full flex flex-col items-center justify-center">
+                    {/* <AchievementsSection /> */}
+                    <div className=" w-full flex flex-col items-center justify-center">
                         <div className="flex items-center">
                             <h2 className='text-5xl font-bold px-3 pb-3'>Trò chuyện với bất kỳ </h2>
                             <div className=' rotate-3 text-white text-5xl px-3 py-2 font-bold bg-amber-500 rounded-xl'>PDF</div>
 
                         </div>
-                        <p className='mt-3 text-center text-[17px]'>
+                        <p className='mt-10 text-center text-[17px]'>
                             Tham gia cùng hàng triệu <u className='text-amber-500'>sinh viên, nhà nghiên cứu và chuyên gia</u> để ngay lập tức <br />
                             giải đáp câu hỏi và hiểu tài liệu nghiên cứu với AI
                         </p>
 
-                        <div className="mt-3 h-[50%] w-[60%] bg-amber-50 shadow-xl shadow-orange-100 rounded-2xl flex items-center justify-center">
-
+                        <div className="mt-10 h-[320px] w-[60%] bg-amber-50 shadow-xl shadow-orange-100 rounded-2xl flex items-center justify-center">
                             <form onSubmit={handleFileUpload} className='h-full w-full flex items-center justify-center'>
                                 <div className="h-[90%] w-[95%] border-dashed bg-orange-50 flex flex-col items-center justify-center border-amber-500 border-2 rounded-2xl
                                                 hover:bg-orange-100
@@ -403,6 +416,244 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
                             </form>
 
                         </div>
+                        <div className="mt-20">
+                            <p className='text-center text-xl text-gray-500'>Được tin dùng bởi sinh viên và nhà nghiên cứu từ các tổ chức hàng đầu</p>
+                            <div className="">
+                                <div className="flex items-center space-x-2 mt-3 justify-center">
+                                    <img src={uni1} alt="uni1" width={150} />
+                                    <img src={uni2} alt="uni1" width={200} />
+                                    <img src={uni3} alt="uni1" width={200} />
+                                </div>
+                                <div className="flex item-center space-x-2 mt-5 justify-center">
+                                    <img src={uni4} alt="uni1" width={270} height={50} />
+                                    <img src={uni5} alt="uni1" width={200} />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="mt-20 h-[250px] w-[70%] rounded-xl p-3 bg-orange-50">
+                            <div className="mt-3">
+                                <h3 className='text-center text-3xl font-medium'>" Nó giống như ChatGPT,</h3>
+                                <h3 className='text-center text-3xl font-medium'>nhưng dành cho <span className='text-orange-400'>bài nghiên cứu</span>."</h3>
+                            </div>
+                            <div className="w-full flex items-center justify-center mt-7">
+                                <div className="">
+                                    <div className="flex items-center justify-center m-2">
+                                        <img src="https://www.chatpdf.com/_static/twitter/profile/mushtaq_64x64.webp" alt="avata" className=' w-[40px] h-[40px] rounded-[50%]' />
+                                    </div>
+                                    <p className='text-sm text-center font-bold'>MushtaqBilalPhD</p>
+                                    <p className='text-sm text-center text-gray-500'>@MushtaqBilalPhD</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className="mt-20">
+                            <div className="space-y-5">
+                                <h3 className=' text-center text-4xl font-medium'>ChatPDF một cách <span className='text-orange-400'>Ngắn gọn</span></h3>
+                                <p className='text-xl text-center text-gray-500'>PDF AI của bạn - giống ChatGPT nhưng dành cho PDFs. Tóm tắt và trả lời câu hỏi miễn phí.</p>
+                            </div>
+                            <div className="mt-10">
+                                <div className="flex space-x-5">
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+                                        <FaFlaskVial className='text-violet-500 text-xl' />
+                                        <h3 className="font-medium text-xl my-2">Dành cho nhà nghiên cứu</h3>
+                                        <p className="text-gray-500">
+                                            Khám phá các bài báo khoa học, tài liệu học thuật và sách để lấy thông tin bạn cần cho nghiên cứu.
+                                        </p>
+                                        <div className="w-full mt-4 h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://fastdo.vn/wp-content/uploads/2023/02/nghien-cuu-thi-truong-8.jpg"
+                                                alt="Hình ảnh nghiên cứu thị trường"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+                                        <FaGraduationCap className='text-green-500 text-xl' />
+                                        <h3 className="font-medium text-xl my-2">Dành cho sinh viên</h3>
+                                        <p className="text-gray-500">
+                                            Học cho kỳ thi, nhận trợ giúp với bài tập, và trả lời câu hỏi trắc nghiệm nhanh hơn các sinh viên khác.
+                                        </p>
+                                        <div className="w-full mt-4 h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://mkteer.vn/wp-content/uploads/2021/11/mkteer.vn-marketing-research.png"
+                                                alt="Hình ảnh nghiên cứu marketing"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex mt-5 space-x-5">
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+                                        <FaBriefcase className='text-orange-500 text-xl' />
+                                        <h3 className="font-medium text-xl my-2">Dành cho chuyên gia</h3>
+                                        <p className="text-gray-500">
+                                            Xử lý hợp đồng pháp lý, báo cáo tài chính, sổ tay và tài liệu đào tạo. Đặt câu hỏi về bất kỳ PDF nào để luôn cập nhật.
+                                        </p>
+                                        <div className="w-full mt-4 h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://qtuupload.s3.ap-southeast-1.amazonaws.com/2024/09/Loi-ich-va-tac-tai-cua-viec-di-lam-them-cua-sinh-vien.jpg"
+                                                alt="Hình ảnh lợi ích của việc làm thêm cho sinh viên"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+                                        <FaQuoteLeft className='text-pink-500 text-xl' />
+                                        <h3 className="font-medium text-xl my-2">Nguồn được trích dẫn</h3>
+                                        <p className="text-gray-500">
+                                            Trích dẫn được nhúng sẵn liên kết phản hồi đến các trang PDF gốc. Không cần phải tìm từng trang.
+                                        </p>
+                                        <div className="w-full mt-4 h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://getdrive.net/wp-content/uploads/2020/04/Nghien-cuu-thi-truong.jpg"
+                                                alt="Hình ảnh nghiên cứu thị trường"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex mt-5 space-x-5">
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+                                        <LuFileStack className='text-yellow-500 text-xl' />
+                                        <h3 className="font-medium text-xl my-2">Trò chuyện với nhiều tiệp</h3>
+                                        <p className="text-gray-500">
+                                            Tạo thư mục để sắp xếp tệp của bạn và trò chuyện với nhiều PDF trong một cuộc trò chuyện duy nhất.
+                                        </p>
+                                        <div className="w-full mt-4 h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://luanvan123.net/files/assets/de_tai_mau_mon_phuong_phap_nghien_cuu_khoa_hoc_luanvan123.jpg"
+                                                alt="Hình ảnh đề tài nghiên cứu khoa học"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+                                        <GrLanguage className='text-blue-500 text-xl' />
+                                        <h3 className="font-medium text-xl my-2">Bất kỳ ngôn ngữ</h3>
+                                        <p className="text-gray-500">
+                                            Hoạt động trên toàn cầu! ChatPDF chấp nhận PDFs trong bất kỳ ngôn ngữ nào và có thể trò chuyện bằng bất kỳ ngôn ngữ nào.
+                                        </p>
+                                        <div className="w-full mt-4 h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://adichthuat.com/wp-content/uploads/2021/07/ngon-ngu1.jpg"
+                                                alt="Hình ảnh ngôn ngữ toàn cầu"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-20 h-[320px] w-[60%] bg-amber-50 shadow-xl shadow-orange-100 rounded-2xl flex items-center justify-center">
+                            <form onSubmit={handleFileUpload} className='h-full w-full flex items-center justify-center'>
+                                <div className="h-[90%] w-[95%] border-dashed bg-orange-50 flex flex-col items-center justify-center border-amber-500 border-2 rounded-2xl
+                                                hover:bg-orange-100
+                                "
+                                >
+                                    <div className="relative w-[100px] h-[100px]"
+                                        onClick={triggerFileInput}
+                                    >
+                                        <FaFile className='w-full h-full text-white' />
+                                        <div className="absolute bottom-[-10px] right-[-10px] z-10">
+                                            <IoArrowUpCircle className='text-5xl' />
+                                        </div>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        accept=".pdf"
+                                        ref={fileInputRef}
+                                        onChange={handleFileChange}
+                                        className="hidden" // Ẩn hoàn toàn input
+                                    />
+                                    <p
+                                        className="truncate-text cursor-pointer text-xl mt-5 font-medium"
+                                        onClick={triggerFileInput}
+                                        title={file ? file.name : "Chọn file PDF"} // Tooltip hiển thị tên đầy đủ
+                                    >
+                                        {file ? truncateTitle(file.name) : "Nhấn để tải hoặc kéo PDF vào đây"}
+                                    </p>
+                                    <button className='mt-5 flex items-center text-white justify-center w-[150px] h-[45px] bg-amber-500 rounded-xl hover:bg-amber-400'
+                                        type="submit"
+                                    >
+                                        <IoArrowUpCircle className='text-2xl mr-2' />
+                                        Tải PDF lên
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="mt-20">
+                            <div className="space-y-5">
+                                <h3 className=' text-center text-4xl font-medium'>Tương tác với PDF trở lên <span className='text-orange-400'>Đơn giản</span></h3>
+                                <p className='text-xl text-center text-gray-500'>Tóm tắt, so sánh và đặt câu hỏi cho bất kỳ PDF nào. Nhanh, miễn phí, không cần đăng ký.</p>
+                            </div>
+                            <div className="mt-10">
+                                <div className="flex space-x-5">
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+
+                                        <div className="w-full h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://asiasoft.com.vn/wp-content/uploads/2022/09/ky-nang-dieu-hanh-cuoc-hop.jpg"
+                                                alt="Hình ảnh nghiên cứu thị trường"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <p className='text-yellow-500 text-md mt-4'>Tổ chức</p>
+                                        <h3 className="font-medium text-xl my-2">Trò truyện với nhiều PDF</h3>
+                                        <p className="text-gray-500">
+                                            Đưa nhiều PDFs vào một cuộc trò chuyện. Giữ tài liệu học, bài nghiên cứu hoặc tệp dự án ở cùng một nơi.
+                                        </p>
+                                    </div>
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+                                        <div className="w-full h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://asiasoft.com.vn/wp-content/uploads/2022/09/mau-phan-cong-cong-viec-7.jpg"
+                                                alt="Hình ảnh nghiên cứu thị trường"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <p className='text-violet-500 text-md mt-4'>Đơn giản hóa</p>
+                                        <h3 className="font-medium text-xl my-2">Trò truyện với nhiều PDF</h3>
+                                        <p className="text-gray-500">
+                                            Đưa nhiều PDFs vào một cuộc trò chuyện. Giữ tài liệu học, bài nghiên cứu hoặc tệp dự án ở cùng một nơi.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex mt-5 space-x-5">
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+                                        <div className="w-full h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://png.pngtree.com/png-clipart/20240708/original/pngtree-flat-design-of-soft-skills-concept-png-image_15516351.png"
+                                                alt="Hình ảnh nghiên cứu thị trường"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <p className='text-green-500 text-md mt-4'>Hiểu</p>
+                                        <h3 className="font-medium text-xl my-2">Dịch PDF</h3>
+                                        <p className="text-gray-500">
+                                            Biến mọi PDF thành ngôn ngữ của bạn. Chuyển đổi tài liệu trên khắp thế giới thành văn bản rõ ràng, dễ hiểu ngay lập tức.
+                                        </p>
+                                    </div>
+                                    <div className="w-[400px] h-[420px] p-6 rounded-xl border-1 shadow-md border-gray-200">
+                                        <div className="w-full h-[220px] rounded-xl shadow-xl overflow-hidden">
+                                            <img
+                                                src="https://cdn1585.cdn4s4.io.vn//media/articles/528/content/cach-cai-thien-dieu-huong-website.jpg"
+                                                alt="Hình ảnh nghiên cứu thị trường"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <p className='text-blue-500 text-md mt-4'>Điều hướng</p>
+                                        <h3 className="font-medium text-xl my-2">Chế độ xem cạnh nhau</h3>
+                                        <p className="text-gray-500">
+                                            Giữ cửa sổ chat và PDF cạnh nhau. Câu trả lời được liên kết với nội dung gốc trong PDF, giúp dễ dàng kiểm chứng hoặc tìm hiểu thêm.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <CollapseInfo />
+                        <Footer />
                     </div>
                 </div>
             )}

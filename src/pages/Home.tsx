@@ -47,7 +47,7 @@ const Home: React.FC = () => {
                         theme="light"
                         transition={Bounce}
                     />
-                    <div className="h-full ">
+                    <div className="h-full fixed ">
                         <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
                     </div>
                     <div className={`w-full h-full transition-all duration-800 ease-in-out ${sidebarOpen ? 'sm:pl-0 md:pl-[300px]' : ' pl-0 '} `}>
