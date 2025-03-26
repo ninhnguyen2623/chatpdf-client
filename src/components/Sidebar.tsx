@@ -1,12 +1,12 @@
 import { HiMenuAlt3 } from "react-icons/hi";
-import { IoSearch } from "react-icons/io5";
+import { IoFolderOutline, IoSearch } from "react-icons/io5";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { AiOutlineDash } from "react-icons/ai";
 import { SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
-import { GoCode } from "react-icons/go";
+import { GoCode, GoFileSymlinkFile, GoPlus } from "react-icons/go";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
 import { chat, uploadPDF, deleteConversation, updateConversation } from '../services/api';
@@ -252,9 +252,9 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
                 </header>
                 <div className="mt-2">
                     <form onSubmit={handleFileUpload}>
-                        <div className="flex space-x-3 p-2 mx-3 w-[90%] rounded-[10px] items-center hover:bg-neutral-800">
-                            <FaRegFileLines />
-                            <div className="text-sm w-[80%] flex items-center space-x-2">
+                        <div className="flex border-[1px] border-gray-600 space-x-3 p-2 mx-3 w-[90%] rounded-[10px] items-center justify-center hover:bg-neutral-800">
+                            <IoFolderOutline />
+                            <div className="text-sm  flex items-center space-x-2">
                                 <input
                                     type="file"
                                     accept=".pdf"
@@ -267,16 +267,16 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
                                     onClick={triggerFileInput}
                                     title={file ? file.name : "Chọn file PDF"} // Tooltip hiển thị tên đầy đủ
                                 >
-                                    {file ? truncateTitle(file.name) : "Upload file PDF"}
+                                    {file ? truncateTitle(file.name) : "Thư mục mới"}
                                 </p>
                             </div>
                         </div>
                         <button
                             type="submit"
-                            className="flex w-[90%] space-x-3 p-2 mx-3 rounded-[10px] items-center hover:bg-neutral-800"
+                            className="flex w-[90%] mt-3 border-[1px] justify-center border-gray-600 space-x-3 p-2 mx-3 rounded-[10px] items-center hover:bg-neutral-800"
                         >
-                            <FaRegSquarePlus />
-                            <p className='text-sm'>ChatBOT</p>
+                            <GoPlus />
+                            <p className='text-sm'>Cuộc trò chuyện mới</p>
                         </button>
                     </form>
                 </div>
@@ -344,17 +344,16 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
                         </div>
                     </div>
                 </div>
-                <div className="absolute bottom-0 left-0 w-full p-2">
+                <div className="absolute bottom-0 mb-2 mr-2 left-0 w-full p-2">
                     <Dropdown menu={{ items }}>
                         <a onClick={(e) => e.preventDefault()}>
-                            <div className="flex justify-between items-center h-[56px] p-3 border-gray-300 border-2 shadow-md rounded-[10px]">
+                            <div className="flex justify-between items-center h-[56px] px-4 border-gray-600 shadow-md rounded-[10px]">
                                 <div className="flex space-x-3 items-center">
-                                    <div>
-                                        <img src={url} alt="Fume lovely" height={35} width={35} className='rounded-sm' />
+                                    <div className="w-[35px] h-[35px] bg-neutral-600 flex items-center justify-center rounded-2xl text-white font-bold uppercase">
+                                        {userName?.slice(0, 2)}
                                     </div>
                                     <div>
-                                        <h3 className='font-bold text-sm'>FumeYamYam</h3>
-                                        <p className='text-[12px] text-gray-400'>fume@gmail.com</p>
+                                        <p className='text-md font-medium'>{userName}</p>
                                     </div>
                                 </div>
                                 <div className="ml-3 rotate-90">
@@ -366,6 +365,14 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
                             </div>
                         </a>
                     </Dropdown>
+                    <div className="flex items-center justify-center">
+                        <button className="w-[96%] h-[40px] bg-amber-600 rounded-[10px] hover:bg-amber-500">
+                            <div className="flex space-x-2 items-center justify-center">
+                                <img src="https://www.chatpdf.com/_next/static/media/UpgradeStarIcon.92a187c4.svg" alt="" width={20} />
+                                <p className="font-medium">Nâng cấp lên Plus</p>
+                            </div>
+                        </button>
+                    </div>
 
                 </div>
             </div>

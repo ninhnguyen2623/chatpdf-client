@@ -1,3 +1,4 @@
+// pages/LoginPage.tsx
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState, AppDispatch } from '../store'
@@ -20,7 +21,7 @@ const LoginPage: React.FC = () => {
         e.preventDefault()
         try {
             const response = await login({ email, password })
-            dispatch(setToken(response.data.access))
+            dispatch(setToken({ token: response.data.access, refresh: response.data.refresh }));
             localStorage.setItem('name', email);
             toast.success(`🎉 Chào mừng đăng nhập thành công.`, {
                 position: "top-center",

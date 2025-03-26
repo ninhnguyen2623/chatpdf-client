@@ -1,3 +1,4 @@
+// store/index.tsx
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './authSlice'
 import chatReducer from './chatSlice'

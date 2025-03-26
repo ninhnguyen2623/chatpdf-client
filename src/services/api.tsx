@@ -1,3 +1,4 @@
+// services/api.js
 import axios, { AxiosResponse } from 'axios';
 
 const api = axios.create({
@@ -12,6 +13,39 @@ export const setAuthToken = (token: string | null) => {
     }
 };
 
+// Hàm refresh token
+const refreshToken = async () => {
+    const refresh = localStorage.getItem('refresh');
+    if (!refresh) throw new Error('No refresh token available');
+    const response = await api.post('/token/refresh/', { refresh });
+    const newAccessToken = response.data.access;
+    localStorage.setItem('token', newAccessToken);
+    setAuthToken(newAccessToken);
+    return newAccessToken;
+};
+
+// Interceptor để xử lý lỗi 401
+api.interceptors.response.use(
+    response => response,
+    async error => {
+        const originalRequest = error.config;
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            try {
+                const newToken = await refreshToken();
+                originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
+                return api(originalRequest);
+            } catch (refreshError) {
+                // Nếu refresh thất bại, đăng xuất
+                localStorage.removeItem('token');
+                localStorage.removeItem('refresh');
+                window.location.href = '/login';
+                return Promise.reject(refreshError);
+            }
+        }
+        return Promise.reject(error);
+    }
+);
 interface AuthResponse {
     refresh: string;
     access: string;

@@ -56,6 +56,7 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
     const [file, setFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [isTyping, setIsTyping] = useState(false);
+    const userName = localStorage.getItem('name') || 'My Account';
 
 
     useEffect(() => {
@@ -357,16 +358,17 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
 
                 <div className="z-[-2] ">
 
-                    <div className="h-[60px]">
+                    <div className="h-[40px]">
                         {!sidebarOpen && (
                             <div className="flex ml-2 h-full items-center text-2xl text-neutral-700 font-bold space-x-4">
-                                <button onClick={toggleSidebar}>
+                                <button onClick={toggleSidebar} className='mt-3'>
                                     {sidebarOpen ? <HiMenuAlt3 /> : <HiMenuAlt2 />}
                                 </button>
+
                             </div>
                         )}
                     </div>
-                    {/* <AchievementsSection /> */}
+                    <AchievementsSection />
                     <div className=" w-full flex flex-col items-center justify-center">
                         <div className="flex items-center">
                             <h2 className='text-5xl font-bold px-3 pb-3'>Trò chuyện với bất kỳ </h2>
