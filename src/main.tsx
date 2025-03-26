@@ -8,8 +8,9 @@ import { setToken } from './store/authSlice'
 
 // Khôi phục trạng thái đăng nhập từ localStorage khi ứng dụng khởi động
 const token = localStorage.getItem('token')
-if (token) {
-  store.dispatch(setToken(token)); // Khôi phục token vào Redux
+const refresh = localStorage.getItem('refresh')
+if (token && refresh) {
+  store.dispatch(setToken({ token, refresh })); // Khôi phục cả token và refresh
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

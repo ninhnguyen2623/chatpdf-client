@@ -10,19 +10,31 @@ import { Bounce, toast, ToastContainer } from 'react-toastify'
 
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>()
-    const { user } = useSelector((state: RootState) => state.auth)
+    const { user, token } = useSelector((state: RootState) => state.auth)
     const navigate = useNavigate()
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
+    const [loading, setLoading] = useState<boolean>(false)
 
+    // Chuyển hướng nếu đã đăng nhập
+    useEffect(() => {
+        if (user && token) {
+            navigate('/', { replace: true }) // Chuyển về trang chủ nếu đã có token
+        }
+    }, [user, token, navigate])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setLoading(true)
+        setError(null)
+
         try {
             const response = await login({ email, password })
-            dispatch(setToken({ token: response.data.access, refresh: response.data.refresh }));
-            localStorage.setItem('name', email);
+            const accessToken = response.data.access
+            const refreshToken = response.data.refresh
+            dispatch(setToken({ token: accessToken, refresh: refreshToken }))
+            localStorage.setItem('name', email)
             toast.success(`🎉 Chào mừng đăng nhập thành công.`, {
                 position: "top-center",
                 autoClose: 1000,
@@ -31,17 +43,19 @@ const LoginPage: React.FC = () => {
                 pauseOnHover: false,
                 draggable: true,
                 theme: "light",
-                onClose: () => navigate('/'), // Chuyển hướng sau khi toast đóng
-            });
-
+                onClose: () => navigate('/'),
+            })
         } catch (err) {
             if (axios.isAxiosError(err) && err.response) {
-                toast.error(err.response.data.error || 'Invalid credentials')
-                setError(err.response.data.error || 'Invalid credentials')
+                const errorMsg = err.response.data.error || 'Invalid credentials'
+                toast.error(errorMsg)
+                setError(errorMsg)
             } else {
                 toast.warn("An unexpected error occurred")
                 setError('An unexpected error occurred')
             }
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -62,19 +76,20 @@ const LoginPage: React.FC = () => {
             />
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Login</h2>
-                {/* {error && <p className="text-red-500 mb-4">{error}</p>} */}
+                {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-gray-700 mb-2">
-                            email
+                            Email
                         </label>
                         <input
-                            type="text"
+                            type="email"
                             id="email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
                             required
+                            disabled={loading}
                         />
                     </div>
                     <div className="mb-6">
@@ -88,13 +103,15 @@ const LoginPage: React.FC = () => {
                             onChange={e => setPassword(e.target.value)}
                             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
                             required
+                            disabled={loading}
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full p-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+                        className="w-full p-2 bg-orange-500 text-white rounded hover:bg-orange-600 disabled:bg-orange-300"
+                        disabled={loading}
                     >
-                        Log In
+                        {loading ? 'Logging In...' : 'Log In'}
                     </button>
                 </form>
                 <p className="mt-4 text-center text-gray-600">

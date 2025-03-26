@@ -6,8 +6,6 @@ import ChatWindow from '../components/Chat/ChatWindow'
 import { Link, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { Bounce, ToastContainer } from 'react-toastify'
-import Appbar from '../components/Appbar'
-
 const Home: React.FC = () => {
     const { user, token } = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch<AppDispatch>()
@@ -20,8 +18,9 @@ const Home: React.FC = () => {
     }
 
     useEffect(() => {
+        // Nếu không có user hoặc token, chuyển hướng về login
         if (!user || !token) {
-            navigate('/login') // Chuyển hướng nếu chưa đăng nhập
+            navigate('/login', { replace: true }) // Sử dụng replace để không thêm vào history
         }
     }, [user, token, navigate])
     const toggleSidebar = () => {
