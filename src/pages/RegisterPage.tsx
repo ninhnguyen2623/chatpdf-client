@@ -13,8 +13,6 @@ const RegisterPage: React.FC = () => {
     const [username, setUsername] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [error, setError] = useState<string | null>(null)
-    const [success, setSuccess] = useState<string | null>(null)
 
     useEffect(() => {
         if (user) {
@@ -26,7 +24,6 @@ const RegisterPage: React.FC = () => {
         e.preventDefault()
         try {
             await register({ username, email, password })
-            setError(null)
             setUsername('')
             setEmail('')
             setPassword('')
@@ -43,12 +40,10 @@ const RegisterPage: React.FC = () => {
         } catch (err) {
             if (axios.isAxiosError(err) && err.response) {
                 toast.success(err.response.data.error || 'Registration failed')
-                setError(err.response.data.error || 'Registration failed')
             } else {
                 toast.success('An unexpected error occurred')
-                setError('An unexpected error occurred')
+
             }
-            setSuccess(null)
         }
     }
 

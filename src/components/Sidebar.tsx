@@ -1,12 +1,11 @@
 import { HiMenuAlt3 } from "react-icons/hi";
-import { IoFolderOutline, IoSearch } from "react-icons/io5";
-import { FaRegSquarePlus } from "react-icons/fa6";
+import { IoFolderOutline } from "react-icons/io5";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { AiOutlineDash } from "react-icons/ai";
 import { SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
-import { GoCode, GoFileSymlinkFile, GoPlus } from "react-icons/go";
+import { GoCode, GoPlus } from "react-icons/go";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
 import { chat, uploadPDF, deleteConversation, updateConversation } from '../services/api';
@@ -20,7 +19,6 @@ import {
     updateConversation as updateConversationAction,
     setTitleConversation,
 } from '../store/chatSlice';
-import { FaRegFileLines } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { FaRegEdit } from "react-icons/fa";
@@ -31,8 +29,6 @@ import { logout } from "../store/authSlice";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { AiOutlineSlack } from "react-icons/ai";
 
-
-const url = 'https://pbs.twimg.com/profile_images/1633849057495113728/Z4DO3hZZ_400x400.jpg';
 
 interface SidebarProps {
     sidebarOpen: boolean;
@@ -51,7 +47,7 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
     const editInputRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate()
     const userName = localStorage.getItem('name') || 'My Account';
-
+    const userPicture = localStorage.getItem('picture') || '';
     const handleLogout = () => {
         dispatch(logout())
         localStorage.removeItem('name');
@@ -349,18 +345,25 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
                         <a onClick={(e) => e.preventDefault()}>
                             <div className="flex justify-between items-center h-[56px] px-4 border-gray-600 shadow-md rounded-[10px]">
                                 <div className="flex space-x-3 items-center">
-                                    <div className="w-[35px] h-[35px] bg-neutral-600 flex items-center justify-center rounded-2xl text-white font-bold uppercase">
-                                        {userName?.slice(0, 2)}
-                                    </div>
+                                    {userPicture ? (
+                                        <img
+                                            src={userPicture}
+                                            alt="User Avatar"
+                                            className="w-[35px] h-[35px] rounded-2xl object-cover"
+                                        />
+                                    ) : (
+                                        <div className="w-[35px] h-[35px] bg-neutral-600 flex items-center justify-center rounded-2xl text-white font-bold uppercase">
+                                            {userName?.slice(0, 2)}
+                                        </div>
+                                    )}
                                     <div>
-                                        <p className='text-md font-medium'>{userName}</p>
+                                        <p className="text-md font-medium">{userName}</p>
                                     </div>
                                 </div>
                                 <div className="ml-3 rotate-90">
                                     <Space>
                                         <GoCode />
                                     </Space>
-
                                 </div>
                             </div>
                         </a>

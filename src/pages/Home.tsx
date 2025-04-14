@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState, AppDispatch } from '../store'
-import { logout } from '../store/authSlice'
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
 import ChatWindow from '../components/Chat/ChatWindow'
 import { Link, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { Bounce, ToastContainer } from 'react-toastify'
 const Home: React.FC = () => {
     const { user, token } = useSelector((state: RootState) => state.auth)
-    const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
     const [sidebarOpen, setSidebarOpen] = useState(true);
-
-    const handleLogout = () => {
-        dispatch(logout())
-        navigate('/login')
-    }
 
     useEffect(() => {
         // Nếu không có user hoặc token, chuyển hướng về login

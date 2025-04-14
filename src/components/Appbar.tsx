@@ -1,9 +1,7 @@
-import { FaRegPenToSquare } from 'react-icons/fa6'
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi'
 import { SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
-import { GoChevronDown } from "react-icons/go";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../store';

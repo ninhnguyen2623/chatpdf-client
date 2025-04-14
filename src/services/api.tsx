@@ -12,6 +12,9 @@ export const setAuthToken = (token: string | null) => {
         delete api.defaults.headers.common['Authorization'];
     }
 };
+// services/api.js 1
+export const googleLogin = (data: { credential: string }): Promise<AxiosResponse<AuthResponse>> =>
+    api.post('/google-login/', data)
 
 // Hàm refresh token
 const refreshToken = async () => {
@@ -49,6 +52,13 @@ api.interceptors.response.use(
 interface AuthResponse {
     refresh: string;
     access: string;
+    user?: {
+        id?: number;
+        username?: string;
+        email?: string;
+        name?: string;
+        picture?: string;
+    };
 }
 
 interface ChatResponse {
@@ -63,12 +73,6 @@ interface Conversation {
     created_at: string;
     pdf: number;
     pdfUrl?: string;
-}
-
-interface PDF {
-    id: number;
-    title: string;
-    uploaded_at: string;
 }
 
 interface Message {
