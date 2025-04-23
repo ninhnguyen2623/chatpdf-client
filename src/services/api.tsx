@@ -42,6 +42,8 @@ api.interceptors.response.use(
                 // Nếu refresh thất bại, đăng xuất
                 localStorage.removeItem('token');
                 localStorage.removeItem('refresh');
+                localStorage.removeItem('name');
+                localStorage.removeItem('picture');
                 window.location.href = '/login';
                 return Promise.reject(refreshError);
             }
@@ -52,6 +54,8 @@ api.interceptors.response.use(
 interface AuthResponse {
     refresh: string;
     access: string;
+    is_plus: boolean;
+    plus_expiry: string | null;
     user?: {
         id?: number;
         username?: string;
@@ -86,8 +90,24 @@ interface Message {
 export const register = (data: { username: string; email: string; password: string }): Promise<AxiosResponse> =>
     api.post('/register/', data);
 
-export const login = (data: { email: string; password: string }): Promise<AxiosResponse<AuthResponse>> =>
-    api.post('/login/', data);
+// export const login = (data: { email: string; password: string }): Promise<AxiosResponse<AuthResponse>> =>
+//     api.post('/login/', data);
+export const createVNPayPayment = (plan: 'monthly' | 'yearly'): Promise<AxiosResponse<{ payment_url: string }>> =>
+    api.post('/payment/vnpay/', { plan });
+
+export const login = async (data: { email: string; password: string }): Promise<AxiosResponse<AuthResponse>> => {
+    const response = await api.post('/login/', data);
+    return {
+        ...response,
+        data: {
+            access: response.data.access,
+            refresh: response.data.refresh,
+            is_plus: response.data.user?.is_plus || false,
+            plus_expiry: response.data.user?.plus_expiry || null,
+            user: response.data.user,
+        },
+    };
+};
 
 export const uploadPDF = (formData: FormData): Promise<AxiosResponse<{ message: string; id: number }>> =>
     api.post('/upload-pdf/', formData, {

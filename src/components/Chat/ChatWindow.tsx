@@ -21,7 +21,7 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import { Worker } from '@react-pdf-viewer/core';
 import AIResponse from '../AIResponse';
 import { toast } from 'react-toastify';
-import { FaBriefcase, FaFileWord, FaFlaskVial, FaMicrophoneSlash, FaQuoteLeft, FaRegFile, FaSquare } from 'react-icons/fa6';
+import { FaBriefcase, FaFileWord, FaFlaskVial, FaMicrophoneSlash, FaQuoteLeft, FaSquare } from 'react-icons/fa6';
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
 import ModeSelect from './ModeSelect';
 import { AiOutlineDelete, AiOutlineSlack } from 'react-icons/ai';
@@ -40,7 +40,6 @@ import { FaGraduationCap } from "react-icons/fa6";
 import { GrLanguage } from "react-icons/gr";
 import Footer from '../Footer';
 import CollapseInfo from '../CollapseInfo';
-import { TbRectangle } from "react-icons/tb";
 import './Chatwindow.css'
 
 export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSidebar: () => void, sidebarOpen: boolean }) {
@@ -101,7 +100,10 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
     }, []);
 
     const handleSend = async () => {
-        if (!selectedPdf || !token || !input.trim()) return;
+        if (!selectedPdf || !token || !input.trim()) {
+            toast.error("Vui lòng chọn PDF và nhập tin nhắn!");
+            return;
+        }
 
         dispatch(addMessage({ content: input, is_user: true }));
         const userInput = input;
@@ -132,7 +134,6 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
             toast.warn('Trình duyệt không hỗ trợ nhập giọng nói.');
             return;
         }
-
         if (isRecording) {
             recognitionRef.current.stop(); // Dừng ghi âm
         } else {
@@ -405,13 +406,13 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
                                 {isTyping ? (
                                     <>
                                         <button
-                                            className={`p-2 rounded-md ${isRecording ? 'bg-red-500 recording' : 'bg-orange-300'} text-white hover:bg-orange-500`}
+                                            className={`p-2 rounded-md ${isRecording ? 'bg-red-500 recording' : 'bg-orange-500'} text-white hover:bg-orange-300`}
                                             disabled={!selectedPdf}
                                         >
                                             <FaMicrophoneSlash className="text-xl" />
                                         </button>
                                         <button
-                                            className="px-4 bg-orange-300 text-white rounded-md hover:bg-orange-500"
+                                            className="px-4 bg-orange-500 text-white rounded-md hover:bg-orange-300"
                                             disabled={!selectedPdf}
                                         >
                                             <FaSquare className='text-sm' />

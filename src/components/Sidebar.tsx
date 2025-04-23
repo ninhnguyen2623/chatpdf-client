@@ -8,7 +8,7 @@ import { Dropdown, Space } from 'antd';
 import { GoCode, GoPlus } from "react-icons/go";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
-import { chat, uploadPDF, deleteConversation, updateConversation } from '../services/api';
+import { chat, uploadPDF, deleteConversation, updateConversation, createVNPayPayment } from '../services/api';
 import {
     setSelectedPdf,
     setConversationId,
@@ -21,7 +21,7 @@ import {
 } from '../store/chatSlice';
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { FaRegEdit } from "react-icons/fa";
+import { FaCrown, FaRegEdit } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +37,7 @@ interface SidebarProps {
 
 export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
     const dispatch = useDispatch<AppDispatch>();
-    const { token } = useSelector((state: RootState) => state.auth);
+    const { token, user } = useSelector((state: RootState) => state.auth);
     const { conversations, conversationId, model } = useSelector((state: RootState) => state.chat);
     const [file, setFile] = useState<File | null>(null);
     const [editingId, setEditingId] = useState<number | null>(null); // ID của cuộc hội thoại đang chỉnh sửa
@@ -88,6 +88,23 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
         }
     };
 
+    // xử lý plus
+    const handleUpgrade = async (plan: 'monthly' | 'yearly') => {
+        try {
+            const response = await createVNPayPayment(plan);
+            window.open(response.data.payment_url, '_blank');  // Chuyển hướng đến VNPay
+        } catch (err) {
+            toast.error('Không thể khởi tạo thanh toán');
+        }
+    };
+
+    // Format ngày hết hạn
+    const formatExpiry = (expiry: string | null) => {
+        if (!expiry) return '';
+        return new Date(expiry).toLocaleDateString('vi-VN');
+    };
+
+    // xủ lý uplaod file
     const handleFileUpload = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -358,6 +375,12 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
                                     )}
                                     <div>
                                         <p className="text-md font-medium">{userName}</p>
+                                        {user?.is_plus && (
+                                            <div className="flex items-center">
+                                                <FaCrown className="text-yellow-400 mr-1" />
+                                                <p className="text-xs">Hết hạn: {formatExpiry(user.plus_expiry || null)}</p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="ml-3 rotate-90">
@@ -368,15 +391,37 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
                             </div>
                         </a>
                     </Dropdown>
-                    <div className="flex items-center justify-center">
-                        <button className="w-[96%] h-[40px] bg-amber-600 rounded-[10px] hover:bg-amber-500">
-                            <div className="flex space-x-2 items-center justify-center">
-                                <img src="https://www.chatpdf.com/_next/static/media/UpgradeStarIcon.92a187c4.svg" alt="" width={20} />
-                                <p className="font-medium">Nâng cấp lên Plus</p>
-                            </div>
-                        </button>
-                    </div>
-
+                    {!user?.is_plus && (
+                        <div className="flex items-center justify-center">
+                            <Dropdown
+                                menu={{
+                                    items: [
+                                        {
+                                            key: '1',
+                                            label: 'Gói 1 tháng - 500.000 VND',
+                                            onClick: () => handleUpgrade('monthly'),
+                                        },
+                                        {
+                                            key: '2',
+                                            label: 'Gói 1 năm - 4.000.000 VND',
+                                            onClick: () => handleUpgrade('yearly'),
+                                        },
+                                    ],
+                                }}
+                            >
+                                <button className="w-[96%] h-[40px] bg-amber-600 rounded-[10px] hover:bg-amber-500">
+                                    <div className="flex space-x-2 items-center justify-center">
+                                        <img
+                                            src="https://www.chatpdf.com/_next/static/media/UpgradeStarIcon.92a187c4.svg"
+                                            alt=""
+                                            width={20}
+                                        />
+                                        <p className="font-medium">Nâng cấp lên Plus</p>
+                                    </div>
+                                </button>
+                            </Dropdown>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

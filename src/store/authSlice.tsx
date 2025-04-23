@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { setAuthToken } from '../services/api'
 
 interface AuthState {
-    user: { loggedIn: boolean } | null
+    user: { loggedIn: boolean, is_plus?: boolean; plus_expiry?: string | null } | null
     token: string | null
     refresh: string | null  // Thêm refresh token
 }
@@ -20,14 +20,15 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setToken: (state, action: PayloadAction<{ token: string; refresh: string } | null>) => {
+        setToken: (state, action: PayloadAction<{ token: string; refresh: string; is_plus?: boolean; plus_expiry?: string } | null>) => {
             if (action.payload) {
-                state.token = action.payload.token
-                state.refresh = action.payload.refresh
-                state.user = { loggedIn: true }
-                localStorage.setItem('token', action.payload.token)
-                localStorage.setItem('refresh', action.payload.refresh)
-                setAuthToken(action.payload.token)
+                const { token, refresh, is_plus, plus_expiry } = action.payload;
+                state.token = token
+                state.refresh = refresh
+                state.user = { loggedIn: true, is_plus, plus_expiry }
+                localStorage.setItem('token', token)
+                localStorage.setItem('refresh', refresh)
+                setAuthToken(token)
             } else {
                 state.user = null
                 state.token = null

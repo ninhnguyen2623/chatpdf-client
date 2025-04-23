@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import Test from './pages/Test'
+
 const App: React.FC = () => {
   return (
     <Router>

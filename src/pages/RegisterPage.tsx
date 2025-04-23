@@ -13,6 +13,7 @@ const RegisterPage: React.FC = () => {
     const [username, setUsername] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [confirmPassword, setConfirmPassword] = useState<string>('')
 
     useEffect(() => {
         if (user) {
@@ -22,55 +23,43 @@ const RegisterPage: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (password !== confirmPassword) {
+            toast.error('❗ Mật khẩu không khớp', {
+                position: "top-center",
+                autoClose: 2000,
+            })
+            return
+        }
+
         try {
             await register({ username, email, password })
             setUsername('')
             setEmail('')
             setPassword('')
-            toast.success(`🎉 Registration successful! Please log in.`, {
+            setConfirmPassword('')
+            toast.success(`🎉 Đăng ký thành công!`, {
                 position: "top-center",
                 autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                theme: "light",
-                onClose: () => navigate('/login'), // Chuyển hướng sau khi toast đóng
-            });
+                onClose: () => navigate('/login'),
+            })
         } catch (err) {
             if (axios.isAxiosError(err) && err.response) {
-                toast.success(err.response.data.error || 'Registration failed')
+                toast.error(err.response.data.error || 'Đăng ký thất bại')
             } else {
-                toast.success('An unexpected error occurred')
-
+                toast.error('Đã xảy ra lỗi không xác định')
             }
         }
     }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <ToastContainer
-                position="top-right"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover={false}
-                theme="light"
-                transition={Bounce}
-            />
+            <ToastContainer transition={Bounce} />
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Register</h2>
-                {/* {success && <p className="text-green-500 mb-4">{success}</p>} */}
-                {/* {error && <p className="text-red-500 mb-4">{error}</p>} */}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label htmlFor="username" className="block text-gray-700 mb-2">
-                            Username
-                        </label>
+                        <label htmlFor="username" className="block text-gray-700 mb-2">Username</label>
                         <input
                             type="text"
                             id="username"
@@ -81,11 +70,9 @@ const RegisterPage: React.FC = () => {
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="email" className="block text-gray-700 mb-2">
-                            Email
-                        </label>
+                        <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
                         <input
-                            type="text"
+                            type="email"
                             id="email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
@@ -93,15 +80,24 @@ const RegisterPage: React.FC = () => {
                             required
                         />
                     </div>
-                    <div className="mb-6">
-                        <label htmlFor="password" className="block text-gray-700 mb-2">
-                            Password
-                        </label>
+                    <div className="mb-4">
+                        <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
                         <input
                             type="password"
                             id="password"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
+                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            required
+                        />
+                    </div>
+                    <div className="mb-6">
+                        <label htmlFor="confirmPassword" className="block text-gray-700 mb-2">Confirm Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={e => setConfirmPassword(e.target.value)}
                             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
                             required
                         />
