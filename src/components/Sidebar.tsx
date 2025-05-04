@@ -89,10 +89,30 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
     };
 
     // xử lý plus
+    // const handleUpgrade = async (plan: 'monthly' | 'yearly') => {
+    //     try {
+    //         const response = await createVNPayPayment(plan);
+    //         window.open(response.data.payment_url, '_blank');  // Chuyển hướng đến VNPay
+    //     } catch (err) {
+    //         toast.error('Không thể khởi tạo thanh toán');
+    //     }
+    // };
     const handleUpgrade = async (plan: 'monthly' | 'yearly') => {
         try {
-            const response = await createVNPayPayment(plan);
-            window.open(response.data.payment_url, '_blank');  // Chuyển hướng đến VNPay
+            const response = await fetch('http://localhost:8000/api/payment/paypal/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ plan }),
+            });
+            const data = await response.json();
+            if (data.payment_url) {
+                window.open(data.payment_url, '_blank'); // Mở trang thanh toán PayPal
+            } else {
+                throw new Error(data.error || 'Không thể tạo thanh toán');
+            }
         } catch (err) {
             toast.error('Không thể khởi tạo thanh toán');
         }
@@ -157,7 +177,7 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
             });
         } catch (err) {
             toast.update(loadingToastId, {
-                render: "Tải file lên thất bại!",
+                render: `Tải file lên thất bại! ${err.response?.data?.error}`,
                 type: "error",
                 isLoading: false,
                 autoClose: 1300,
@@ -393,33 +413,19 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
                     </Dropdown>
                     {!user?.is_plus && (
                         <div className="flex items-center justify-center">
-                            <Dropdown
-                                menu={{
-                                    items: [
-                                        {
-                                            key: '1',
-                                            label: 'Gói 1 tháng - 500.000 VND',
-                                            onClick: () => handleUpgrade('monthly'),
-                                        },
-                                        {
-                                            key: '2',
-                                            label: 'Gói 1 năm - 4.000.000 VND',
-                                            onClick: () => handleUpgrade('yearly'),
-                                        },
-                                    ],
-                                }}
+                            <button
+                                onClick={() => navigate('/payment')}
+                                className="w-[96%] h-[40px] bg-amber-600 rounded-[10px] hover:bg-amber-500"
                             >
-                                <button className="w-[96%] h-[40px] bg-amber-600 rounded-[10px] hover:bg-amber-500">
-                                    <div className="flex space-x-2 items-center justify-center">
-                                        <img
-                                            src="https://www.chatpdf.com/_next/static/media/UpgradeStarIcon.92a187c4.svg"
-                                            alt=""
-                                            width={20}
-                                        />
-                                        <p className="font-medium">Nâng cấp lên Plus</p>
-                                    </div>
-                                </button>
-                            </Dropdown>
+                                <div className="flex space-x-2 items-center justify-center">
+                                    <img
+                                        src="https://www.chatpdf.com/_next/static/media/UpgradeStarIcon.92a187c4.svg"
+                                        alt=""
+                                        width={20}
+                                    />
+                                    <p className="font-medium">Nâng cấp lên Plus</p>
+                                </div>
+                            </button>
                         </div>
                     )}
                 </div>

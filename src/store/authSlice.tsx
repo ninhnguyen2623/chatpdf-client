@@ -1,11 +1,10 @@
-// store/authSlice.tsx
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { setAuthToken } from '../services/api'
 
 interface AuthState {
-    user: { loggedIn: boolean, is_plus?: boolean; plus_expiry?: string | null } | null
+    user: { loggedIn: boolean, is_plus?: boolean; plus_expiry?: string | null; id?: number; username?: string; email?: string; name?: string; picture?: string } | null
     token: string | null
-    refresh: string | null  // Thêm refresh token
+    refresh: string | null
 }
 
 const initialToken = localStorage.getItem('token')
@@ -20,12 +19,12 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setToken: (state, action: PayloadAction<{ token: string; refresh: string; is_plus?: boolean; plus_expiry?: string } | null>) => {
+        setToken: (state, action: PayloadAction<{ token: string; refresh: string; is_plus?: boolean; plus_expiry?: string; id?: number; username?: string; email?: string; name?: string; picture?: string } | null>) => {
             if (action.payload) {
-                const { token, refresh, is_plus, plus_expiry } = action.payload;
+                const { token, refresh, is_plus, plus_expiry, id, username, email, name, picture } = action.payload;
                 state.token = token
                 state.refresh = refresh
-                state.user = { loggedIn: true, is_plus, plus_expiry }
+                state.user = { loggedIn: true, is_plus, plus_expiry, id, username, email, name, picture }
                 localStorage.setItem('token', token)
                 localStorage.setItem('refresh', refresh)
                 setAuthToken(token)
@@ -36,6 +35,18 @@ const authSlice = createSlice({
                 localStorage.removeItem('token')
                 localStorage.removeItem('refresh')
                 setAuthToken(null)
+            }
+        },
+        setUser: (state, action: PayloadAction<{ id: number; username: string; is_plus: boolean; plus_expiry: string | null; email?: string; name?: string; picture?: string }>) => {
+            state.user = {
+                loggedIn: true,
+                id: action.payload.id,
+                username: action.payload.username,
+                is_plus: action.payload.is_plus,
+                plus_expiry: action.payload.plus_expiry,
+                email: action.payload.email,
+                name: action.payload.name,
+                picture: action.payload.picture,
             }
         },
         logout: (state) => {
@@ -49,5 +60,5 @@ const authSlice = createSlice({
     },
 })
 
-export const { setToken, logout } = authSlice.actions
+export const { setToken, setUser, logout } = authSlice.actions
 export default authSlice.reducer
