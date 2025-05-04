@@ -122,7 +122,9 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
             dispatch(setPdfUrl(res.data.pdf_url));
         } catch (err) {
             console.error('Failed to send message:', err);
-            dispatch(addMessage({ content: 'Error: Could not get response', is_user: false }));
+            const errorMessage = err.response?.data?.error
+            dispatch(addMessage({ content: errorMessage, is_user: false }));
+            toast.error(errorMessage);
         } finally {
             setIsTyping(false);
         }
