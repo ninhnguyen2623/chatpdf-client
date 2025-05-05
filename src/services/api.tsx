@@ -2,7 +2,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 export const api = axios.create({
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'http://52.63.200.0:8000/api/',
 });
 
 export const setAuthToken = (token: string | null) => {
@@ -135,6 +135,6 @@ export const getMessageHistory = (conversationId: number): Promise<AxiosResponse
 
 export const summarizeConversation = (data: {
     conversation_id: number;
-    model: 'gemini' | 'deepseek' | 'llama' | 'gemma';
+    model: 'gemini' | 'deepseek' | 'llama' | 'gemma' | "qwen";
 }): Promise<AxiosResponse<{ summary: string; conversation_id: number; download_url: string }>> =>
     api.post('/summary/', data);

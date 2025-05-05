@@ -8,7 +8,7 @@ import { Dropdown, Space } from 'antd';
 import { GoCode, GoPlus } from "react-icons/go";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
-import { chat, uploadPDF, deleteConversation, updateConversation, createVNPayPayment } from '../services/api';
+import { chat, uploadPDF, deleteConversation, updateConversation } from '../services/api';
 import {
     setSelectedPdf,
     setConversationId,
@@ -97,26 +97,26 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
     //         toast.error('Không thể khởi tạo thanh toán');
     //     }
     // };
-    const handleUpgrade = async (plan: 'monthly' | 'yearly') => {
-        try {
-            const response = await fetch('http://localhost:8000/api/payment/paypal/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify({ plan }),
-            });
-            const data = await response.json();
-            if (data.payment_url) {
-                window.open(data.payment_url, '_blank'); // Mở trang thanh toán PayPal
-            } else {
-                throw new Error(data.error || 'Không thể tạo thanh toán');
-            }
-        } catch (err) {
-            toast.error('Không thể khởi tạo thanh toán');
-        }
-    };
+    // const handleUpgrade = async (plan: 'monthly' | 'yearly') => {
+    //     try {
+    //         const response = await fetch('http://localhost:8000/api/payment/paypal/', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`,
+    //             },
+    //             body: JSON.stringify({ plan }),
+    //         });
+    //         const data = await response.json();
+    //         if (data.payment_url) {
+    //             window.open(data.payment_url, '_blank'); // Mở trang thanh toán PayPal
+    //         } else {
+    //             throw new Error(data.error || 'Không thể tạo thanh toán');
+    //         }
+    //     } catch (err) {
+    //         toast.error('Không thể khởi tạo thanh toán');
+    //     }
+    // };
 
     // Format ngày hết hạn
     const formatExpiry = (expiry: string | null) => {
@@ -175,7 +175,8 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
                 isLoading: false,
                 autoClose: 1300,
             });
-        } catch (err) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
             toast.update(loadingToastId, {
                 render: `Tải file lên thất bại! ${err.response?.data?.error}`,
                 type: "error",
@@ -197,7 +198,8 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
             await deleteConversation(conversationId);
             dispatch(deleteConversationAction(conversationId));
             toast.success("Delete conversation successfully ");
-        } catch (err) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
             toast.error("Failed delete conversation:", err);
             console.error('Failed to delete conversation:', err);
         }
@@ -241,7 +243,8 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
             setEditingId(null); // Thoát chế độ chỉnh sửa
             setEditTitle('');
             toast.success("Edit conversation successfully ");
-        } catch (err) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
             toast.error("Failed edit conversation:", err);
             console.error('Failed to update conversation:', err);
         }

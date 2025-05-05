@@ -9,7 +9,7 @@ interface AIResponseProps {
     isUser: boolean;
 }
 
-const AIResponse: React.FC<AIResponseProps> = ({ content, isUser }) => {
+const AIResponse: React.FC<AIResponseProps> = ({ content }) => {
     return (
         <div className=" text-black text-sm max-w-xl">
             <ReactMarkdown

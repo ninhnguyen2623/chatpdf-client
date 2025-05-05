@@ -6,7 +6,7 @@ import { login, googleLogin } from '../services/api'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Bounce, toast, ToastContainer } from 'react-toastify'
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
+import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode';
 interface GoogleTokenPayload {
     email: string;

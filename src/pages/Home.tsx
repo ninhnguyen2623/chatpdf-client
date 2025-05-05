@@ -53,6 +53,7 @@ const Home: React.FC = () => {
                 console.log('User updated:', data);
             }
             hasFetched.current = true;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             toast.error(`Lỗi khi lấy thông tin user: ${err.response?.data?.message || err.message}`);
             console.error('Fetch user failed:', err);
@@ -82,6 +83,7 @@ const Home: React.FC = () => {
             }
             navigate(location.pathname, { replace: true });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location, navigate]);
 
     // Kiểm tra token và làm mới user khi tải trang
@@ -91,6 +93,7 @@ const Home: React.FC = () => {
         } else if (!hasFetched.current) {
             fetchUser();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token, navigate]);
 
     return (

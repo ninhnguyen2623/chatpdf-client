@@ -72,25 +72,27 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
     // Khởi tạo SpeechRecognition
     useEffect(() => {
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            // const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
             recognitionRef.current = new SpeechRecognition();
-            recognitionRef.current.continuous = false; // Chỉ ghi âm một lần
-            recognitionRef.current.interimResults = false; // Không hiển thị kết quả tạm thời
-            recognitionRef.current.lang = 'vi-VN'; // Ngôn ngữ mặc định (có thể thay đổi)
+            recognitionRef.current!.continuous = false; // Chỉ ghi âm một lần
+            recognitionRef.current!.interimResults = false; // Không hiển thị kết quả tạm thời
+            recognitionRef.current!.lang = 'vi-VN'; // Ngôn ngữ mặc định (có thể thay đổi)
 
-            recognitionRef.current.onresult = (event) => {
+            recognitionRef.current!.onresult = (event) => {
                 const transcript = event.results[0][0].transcript;
                 setInput(transcript); // Điền văn bản vào input
                 setIsRecording(false); // Tắt ghi âm sau khi có kết quả
             };
 
-            recognitionRef.current.onerror = (event) => {
+            recognitionRef.current!.onerror = (event) => {
                 console.error('Speech recognition error:', event.error);
                 toast.error('Không thể nhận diện giọng nói. Vui lòng thử lại.');
                 setIsRecording(false);
             };
 
-            recognitionRef.current.onend = () => {
+            recognitionRef.current!.onend = () => {
                 setIsRecording(false); // Đảm bảo trạng thái tắt khi ghi âm kết thúc
             };
         } else {
@@ -120,7 +122,8 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
             dispatch(addMessage({ content: res.data.reply, is_user: false }));
             dispatch(setConversationId(res.data.conversation_id));
             dispatch(setPdfUrl(res.data.pdf_url));
-        } catch (err) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
             console.error('Failed to send message:', err);
             const errorMessage = err.response?.data?.error
             dispatch(addMessage({ content: errorMessage, is_user: false }));
@@ -209,6 +212,7 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
                 isLoading: false,
                 autoClose: 1300,
             });
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
             toast.update(loadingToastId, {
                 render: "Tải file lên thất bại!",
@@ -224,7 +228,8 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
             await deleteConversation(conversationId);
             dispatch(deleteConversationAction(conversationId));
             toast.success("Delete conversation successfully ");
-        } catch (err) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
             toast.error("Failed delete conversation:", err);
             console.error('Failed to delete conversation:', err);
         }

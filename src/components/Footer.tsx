@@ -1,4 +1,3 @@
-import React from 'react'
 import { AiFillTikTok, AiOutlineSlack } from 'react-icons/ai'
 import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa'
 import { FaStar } from 'react-icons/fa6'
