@@ -323,7 +323,6 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
             }
         );
     };
-
     return (
         <div className="h-full">
             {selectedPdf && conversationId ? (
@@ -344,7 +343,7 @@ export default function ChatWindow({ toggleSidebar, sidebarOpen }: { toggleSideb
                             </div>
                             {pdfUrl && token ? (
                                 <div className="h-[93%] overflow-y-auto">
-                                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js">
+                                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
                                         <Viewer
                                             key={`${conversationId}-${pdfUrl}`}
                                             fileUrl={pdfUrl}

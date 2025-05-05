@@ -3,7 +3,6 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
-
 const ForgotPassword: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
@@ -15,7 +14,7 @@ const ForgotPassword: React.FC = () => {
         setError(null);
 
         try {
-            const response = await axios.post('http://localhost:8000/api/password-reset/', { email });
+            const response = await axios.post(`http://52.63.200.0:8000/api/password-reset/`, { email });
             toast.success(response.data.message, {
                 position: "top-center",
                 autoClose: 2000,

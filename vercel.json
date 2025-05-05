@@ -1,0 +1,17 @@
+{
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/node",
+        "config": {
+          "installCommand": "npm install --build-from-source"
+        }
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/pdf/:path*",
+        "destination": "https://your-pdf-server.com/:path*"
+      }
+    ]
+  }

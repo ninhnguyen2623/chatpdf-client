@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 
 export const api = axios.create({
     baseURL: 'http://52.63.200.0:8000/api/',
+    // baseURL: 'http://localhost:8000/api/',
 });
 
 export const setAuthToken = (token: string | null) => {

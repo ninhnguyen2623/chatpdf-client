@@ -3,7 +3,6 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-
 const ResetPassword: React.FC = () => {
     const { uidb64, token } = useParams<{ uidb64: string; token: string }>();
     const [newPassword, setNewPassword] = useState('');
@@ -15,7 +14,8 @@ const ResetPassword: React.FC = () => {
         setLoading(true);
         try {
             const response = await axios.post(
-                `http://localhost:8000/api/password-reset-confirm/${uidb64}/${token}/`,
+                // `http://localhost:8000/api/password-reset-confirm/${uidb64}/${token}/`,
+                `http://52.63.200.0:8000/api/password-reset-confirm/${uidb64}/${token}/`,
                 { new_password: newPassword }
             );
             toast.success(response.data.message, {

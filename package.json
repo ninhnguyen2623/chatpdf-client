@@ -21,7 +21,7 @@
     "antd": "^5.24.2",
     "axios": "^1.8.1",
     "jwt-decode": "^4.0.0",
-    "pdfjs-dist": "^3.0.279",
+    "pdfjs-dist": "^3.11.174",
     "prismjs": "^1.29.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -51,5 +51,8 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
