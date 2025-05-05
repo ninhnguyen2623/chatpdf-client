@@ -22,6 +22,7 @@ export default function Payment() {
             } else {
                 throw new Error('Không thể tạo thanh toán');
             }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             toast.error(err.response?.data?.error || 'Không thể khởi tạo thanh toán');
             console.error('Payment error:', err);

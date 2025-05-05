@@ -1,23 +1,22 @@
-import React from 'react'
 import { Collapse } from 'antd';
 export default function CollapseInfo() {
-    const ContextSupbos = [
+    const ContextSubs = [
         {
-            lable: "ChatPDF là gì và nó có thể giúp mình thế nào?",
+            label: "ChatPDF là gì và nó có thể giúp mình thế nào?",
             text: "ChatPDF mang sức mạnh của AI hội thoại đến tài liệu của bạn, cho phép bạn trò chuyện với PDF dễ dàng như khi dùng ChatGPT. Dù bạn đang học tập, nghiên cứu hay phân tích dữ liệu, nền tảng này giúp bạn hiểu và trích xuất thông tin trong vài giây, nhờ công nghệ AI PDF mới nhất."
 
         },
         {
-            lable: "ChatPDF có miễn phí không?",
+            label: "ChatPDF có miễn phí không?",
             text: "Hoàn toàn! Chúng tôi cung cấp gói miễn phí cho phép bạn phân tích 2 tài liệu mỗi ngày. Với những người dùng cần nhiều hơn, gói ChatPDF Plus mang lại khả năng phân tích tài liệu không giới hạn và nhiều tính năng nâng cao."
 
         },
         {
-            lable: "Công nghệ AI của ChatPDF hoạt động như thế nào?",
+            label: "Công nghệ AI của ChatPDF hoạt động như thế nào?",
             text: "ChatPDF sử dụng AI tiên tiến để xây dựng một sơ đồ toàn diện về nội dung và ý nghĩa của tài liệu. Khi bạn trò chuyện với PDF, hệ thống nhanh chóng xác định thông tin liên quan và tạo ra câu trả lời rõ ràng, chính xác - kèm trích dẫn giúp bạn kiểm chứng và tìm hiểu thêm."
         },
         {
-            lable: "ChatPDF có hỗ trợ các loại tệp khác ngoài PDF không?",
+            label: "ChatPDF có hỗ trợ các loại tệp khác ngoài PDF không?",
             text: "Có, ChatPDF hỗ trợ ngày càng nhiều định dạng tài liệu bao gồm PDF (.pdf), Word (.doc, .docx), PowerPoint (.ppt, .pptx), Markdown (.md) và tệp văn bản (.txt). Từ bài nghiên cứu khoa học đến bản thuyết trình công ty, tài liệu pháp lý - tất cả đều trên một nền tảng AI cho tài liệu."
         },
         {
@@ -44,7 +43,7 @@ export default function CollapseInfo() {
     return (
         <div className='mt-20 w-[67%]'>
             <h3 className='text-center mb-20 text-3xl font-medium'>Các câu hỏi thường gặp</h3>
-            {ContextSupbos.map((item, index) => (
+            {ContextSubs.map((item, index) => (
                 <div className="mt-3">
                     <Collapse
                         size="large"
