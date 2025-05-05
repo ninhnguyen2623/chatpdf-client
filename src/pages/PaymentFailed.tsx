@@ -19,6 +19,7 @@ export default function PaymentFailed() {
         } else {
             toast.error('Đã có lỗi xảy ra với thanh toán!');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getPlanName = () => {
